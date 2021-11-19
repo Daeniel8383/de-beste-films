@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<div class = "container-fluid">
+<div class = "container-fluid p-0">
 
  	<div class="jumbotron">
 	  <h1 class="display-4">Dit zijn de beste films aller tijden!</h1>
