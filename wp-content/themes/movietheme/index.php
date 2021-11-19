@@ -1,36 +1,103 @@
 <?php get_header(); ?>
 
-<div class = "container">
+<div class = "container-fluid">
 
  	<div class="jumbotron">
-	  <h1 class="display-4">Hello, world!</h1>
-	  <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+	  <h1 class="display-4">Dit zijn de beste films aller tijden!</h1>
+	  <p class="lead">Deze film database laat je de beste films allertijden zien.</p>
 	  <hr class="my-4">
-	  <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
 	  <p class="lead">
-	    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+	    <a class="btn btn-primary btn-lg" href="http://localhost/de-beste-films/films/" role="button">Bekijk hier het complete overzicht!</a>
 	  </p>
  	</div>
 
-	<div class = "panel panel-default panel-body">
+		<div class = "panel panel-default panel-body">
 		<div class = "row">
 			<div class = "col-md-2">
-				<ul class="nav nav-pills nav-stacked">
-					<li><a href = "#">Category One</a></li>
-					<li><a href = "#">Category Two</a></li>
-					<li><a href = "#">Category Three</a></li>
-					<li><a href = "#">Category Four</a></li>
-				</ul>
+				<h2>Filter op genre</h2>
+
+				<?php
+				// Get the taxonomy's terms
+					$terms = get_terms(
+					    array(
+					        'taxonomy'   => 'genre',
+					        'hide_empty' => false,
+					    )
+					);
+
+
+					// Check if any term exists
+					if ( ! empty( $terms ) && is_array( $terms ) ) {
+					    // Run a loop and print them all
+					    foreach ( $terms as $term ) { ?>
+					    	<ul>
+					      <li><a href="<?php echo esc_url( get_term_link( $term ) ) ?>">
+					            <?php echo $term->name; ?>
+					        </a></li></ul> <?php
+					    }
+					} 
+					?>
 			</div>
 			<div class = "col-md-10">
-				<a href = "#"><h3>This random post is really awesome!</h3></a>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc arcu erat, congue eget ornare et, luctus eget purus. Etiam et risus metus. Nam sed mi tellus. Mauris molestie massa eu metus tempor, in hendrerit arcu adipiscing. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-				<p class = "text-muted">Posted by Daniel on January 1st 2021</p>
+				<h2>Onlangs toegevoegd</h2>
+		 
+				<?php // Begin WP Query Post Loop 
+				$args = array(
+				    'post_type' => 'films',
+				    'posts_per_page' => 5,
+
+				);
+				$the_query = new WP_Query( $args ); ?>
+
+				<?php // Start counter for multiple columns in loop
+					$i = 0; 
+				?>  
+
+				<?php if ( $the_query->have_posts() ) : ?>
+
+				    <?php while ( $the_query->have_posts() ) : $the_query->the_post(); ?>
+
+				    	 
+				    	<?php // If counter is 0 add new row
+							if($i == 0) {
+								echo '<div class="row">';
+								}
+						?>
+
+				    	 <div class = "col-md-5">
+				    	 	 <a href="<?php the_permalink() ?>">
+				    	 	 <?php the_post_thumbnail(); ?>
+				         	 <h2 class="loop-post-title"><?php the_title(); ?></h2></a>
+				         </div>
+
+				         
+				         <?php // If counter is 2 then reset to 0
+							$i++;
+							if($i == 2) {
+								$i = 0;
+								echo '</div>';
+							}
+						?>
+
+				   	  
+				    <?php endwhile; ?>
+
+				    
+				    <?php // Close row when i > 0 
+						if($i > 0) {
+							echo '</div>';
+						}
+						?>
+
+				    <?php wp_reset_postdata(); ?>
+
+				<?php endif; ?>
+
 			</div>
 		</div>
 	</div>
 
-		</div>
+</div>
 
 
 <?php get_footer(); ?>

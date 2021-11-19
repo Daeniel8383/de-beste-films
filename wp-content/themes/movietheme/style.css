@@ -9,3 +9,41 @@ Author URI: https://test.com
 
 
 /* ADD CUSTOM STYLES HERE */
+
+
+
+/* 1. Homepage styles */
+.jumbotron{
+    background-image: url('http://localhost/de-beste-films/wp-content/themes/movietheme/theme-img/header.jpg');
+    background-size: cover;
+    min-height: 50vh;
+    padding: 15% 5%;
+    margin-bottom: 2%;
+}
+
+.jumbotron hr{
+	color: #fff;
+}
+
+h1.display-4, .lead {
+    color: #fff;
+    font-weight: 900;
+    text-shadow: 0 0 15px black;
+}
+
+h2{
+	font-weight: 900;
+	font-size: 1.2em;
+}
+
+h2.loop-post-title {
+    font-size: 1em;
+}
+
+
+/* 2. Footer styles */
+.footer{
+	background: #000;
+	color: #fff;
+	margin-top: 2%;
+}
