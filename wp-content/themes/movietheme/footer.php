@@ -2,9 +2,9 @@
 	<div class="footer">
 		<div class = "navbar navbar-default navbar-fixed-bottom">
 		
-			<div class = "container">
-				<p class = "navbar-text pull-left">&copy; Daniël van Dijk</p>
-				<a href = "http://youtube.com/" class = "navbar-btn btn-danger btn pull-right">Subscribe on YouTube</a>
+			<div class = "container-fluid">
+				<p class = "navbar-text pull-left">&copy; <?php echo date("Y"); ?> | Daniël van Dijk</p>
+				<a href = "mailto:d_vdijk@hotmail.com" class = "navbar-btn btn-danger btn pull-right">Neem contact op!</a>
 			</div>
 		
 		</div>

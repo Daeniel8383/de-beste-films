@@ -33,12 +33,23 @@
                         }
                     } 
                     ?>
+
+                 
             </div>
              <div class = "col-md-2">
                 <?php the_post_thumbnail( 'medium' ); ?>
              </div>
             <div class = "col-md-8">              
-                <h2><?php the_title(); ?></h2>
+                <h2><?php the_title(); ?> | 
+                    <?php
+                        $terms = get_the_terms( $post->ID , 'genre' );
+                        foreach( $terms as $term ) {
+
+                            echo $term->name;
+
+                        }
+                    ?></h2>
+
                 <p><?php the_content();?></p>
 
             </div>

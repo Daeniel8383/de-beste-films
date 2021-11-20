@@ -19,6 +19,21 @@ a, a:hover {
     color: #c20000;
 }
 
+nav.navbar.navbar-expand-md.navbar-dark.bg-dark {
+    background: #000 !important; /* Ja, dit is niet netjes ;) */
+}
+
+.loop-layout {
+    display: block;
+}
+
+.meta{
+    margin-bottom: 5%;
+}
+
+/* Navbar styles */
+
+
 
 /* 2. Homepage styles */
 .jumbotron{
@@ -64,6 +79,7 @@ h2.loop-post-title {
 .single-films p {
     color: #fff;
 }
+
 
 
 /* 4. Footer styles */

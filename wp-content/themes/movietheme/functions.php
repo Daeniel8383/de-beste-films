@@ -7,6 +7,19 @@
  * @since Movietheme 1.0
  */
 
+// Register nav menu
+function register_my_menu() {
+  register_nav_menu('primary',__( 'Header Menu' ));
+}
+add_action( 'init', 'register_my_menu' );
+
+/**
+ * Register Custom Navigation Walker Bootstrap
+ */
+function register_navwalker(){
+    require_once get_template_directory() . '/navwalker/class-wp-bootstrap-navwalker.php';
+}
+add_action( 'after_setup_theme', 'register_navwalker' );
 
 // Register post thumbnails
 add_theme_support( 'post-thumbnails' );
@@ -38,7 +51,7 @@ function custom_movie_type() {
         'labels'              => $labels,
         'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'revisions', 'custom-fields', ),
         'taxonomies'          => array( 'genre', ),
-        'hierarchical'        => false,
+        'hierarchical'        => true,
         'public'              => true,
         'show_ui'             => true,
         'show_in_menu'        => true,
@@ -76,3 +89,68 @@ function movietheme_custom_taxonomy() {
     );
 }
 add_action( 'init', 'movietheme_custom_taxonomy');
+
+// Register taxonomy Year
+function movietheme_custom_taxonomy_year() {
+    register_taxonomy(
+        'jaar',  
+        'films',           
+        array(
+            'hierarchical' => true,
+            'label' => 'Jaar', 
+            'query_var' => true,
+            'rewrite' => array(
+                'slug' => 'jaar',    
+                'with_front' => false 
+            )
+        )
+    );
+}
+add_action( 'init', 'movietheme_custom_taxonomy_year');
+
+
+// Backend filtering custom post type
+
+
+add_action( 'restrict_manage_posts', 'filter_backend_by_taxonomies' , 99, 2);
+// Filter CPT via Custom Taxonomy 
+
+function filter_backend_by_taxonomies( $post_type, $which ) {
+
+// Apply this to a specific CPT
+if ( 'films' !== $post_type )
+    return;
+
+// A list of custom taxonomy slugs to filter by
+$taxonomies = array( 
+        'jaar',
+        'genre',
+
+ );
+
+foreach ( $taxonomies as $taxonomy_slug ) {
+
+    // Retrieve taxonomy data
+    $taxonomy_obj = get_taxonomy( $taxonomy_slug );
+    $taxonomy_name = $taxonomy_obj->labels->name;
+
+    // Retrieve taxonomy terms
+    $terms = get_terms( $taxonomy_slug );
+
+    // Display filter HTML
+    echo "<select name='{$taxonomy_slug}' id='{$taxonomy_slug}' class='postform'>";
+    echo '<option value="">' . sprintf( esc_html__( 'Filter op %s', 'movietheme' ), $taxonomy_name ) . '</option>';
+    foreach ( $terms as $term ) {
+        printf(
+            '<option value="%1$s" %2$s>%3$s (%4$s)</option>',
+            $term->slug,
+            ( ( isset( $_GET[$taxonomy_slug] ) && ( $_GET[$taxonomy_slug] == $term->slug ) ) ? ' selected="selected"' : '' ),
+            $term->name,
+            $term->count
+        );
+    }
+    echo '</select>';
+}
+
+}
+

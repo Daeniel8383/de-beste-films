@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<div class = "container-fluid p-0">
+<div class = "container-fluid">
 
  	<div class="jumbotron">
 	  <h1 class="display-4">Dit zijn de beste films aller tijden!</h1>
@@ -37,6 +37,8 @@
 					    }
 					} 
 					?>
+
+
 			</div>
 			<div class = "col-md-10">
 				<h2>Onlangs toegevoegd</h2>
@@ -44,6 +46,7 @@
 				<?php // Begin WP Query Post Loop 
 				$args = array(
 				    'post_type' => 'films',
+				    'order' => 'DESC',
 				    'posts_per_page' => 5,
 
 				);
@@ -66,8 +69,8 @@
 
 				    	 <div class = "col-md-5">
 				    	 	 <a href="<?php the_permalink() ?>">
-				    	 	 <?php the_post_thumbnail(); ?>
-				         	 <h2 class="loop-post-title"><?php the_title(); ?></h2></a>
+				    	 	 <?php the_post_thumbnail( 'medium' ); ?>
+				         	 <h2 class="loop-post-title"><?php the_title(); ?></h2><div class="meta"><?php echo get_the_date() ?> | <?php echo get_the_time() ?></div></a>
 				         </div>
 
 				         

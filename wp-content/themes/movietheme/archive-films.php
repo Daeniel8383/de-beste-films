@@ -34,13 +34,20 @@
                         }
                     } 
                     ?>
+
+                   
             </div>
             <div class = "col-md-10">
-                <h2>Onlangs toegevoegd</h2>
+
+           
+
+
+                <h2>Overzichtspagina</h2>
          
                 <?php // Begin WP Query Post Loop 
                 $args = array(
-                    'post_type' => 'films',                 
+                    'post_type' => 'films',
+                    'order' => 'ASC',                 
 
                 );
                 $the_query = new WP_Query( $args ); ?>
@@ -62,9 +69,10 @@
 
                          <div class = "col-md-5">
                              <a href="<?php the_permalink() ?>">
-                             <?php the_post_thumbnail(); ?>
-                             <h2 class="loop-post-title"><?php the_title(); ?></h2></a>
+                             <?php the_post_thumbnail( 'medium' ); ?>
+                             <h2 class="loop-post-title"><?php the_title(); ?></h2><div class="meta"><?php echo get_the_date() ?> | <?php echo get_the_time() ?></div></a>
                          </div>
+                      
 
                          
                          <?php // If counter is 2 then reset to 0

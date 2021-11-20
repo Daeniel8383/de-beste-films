@@ -36,7 +36,14 @@
                     ?>
             </div>
             <div class = "col-md-10">
-                <h2>Onlangs toegevoegd</h2>
+                <h2>U zocht op: <?php
+                        $terms = get_the_terms( $post->ID , 'genre' );
+                        foreach( $terms as $term ) {
+
+                            echo $term->name;
+
+                        }
+                    ?></h2>
 
                 <?php // Begin WP Query Post Loop 
                 $args = array(
@@ -69,7 +76,7 @@
 
                          <div class = "col-md-5">
                              <a href="<?php the_permalink() ?>">
-                             <?php the_post_thumbnail(); ?>
+                             <?php the_post_thumbnail( 'medium' ); ?>
                              <h2 class="loop-post-title"><?php the_title(); ?></h2></a>
                          </div>
 
